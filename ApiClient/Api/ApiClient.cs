@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
@@ -57,6 +58,27 @@ namespace Api
         public string Token { get; set; }
     }
 
+    public class User
+    {
+        public int Id { get; set; }
+        public string Pseudo { get; set; }
+        public string Avatar { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string CompanyName { get; set; }
+        public string Address { get; set; }
+        public string PostalCode { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string SteemUserName { get; set; }
+        public string SteemPostingKey { get; set; }
+        public int LinkState { get; set; }
+        public int FriendState { get; set; }
+        public string CreatedAt { get; set; }
+        public string UpdatedAt { get; set; }
+    }
+
     // Docs: https://api.docs.jarvis-edge.io/
     public class ApiClient
     {
@@ -69,6 +91,14 @@ namespace Api
             }, System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
         private readonly HttpClient client;
+
+        public static string BuildQuery(params (string, string)[] args)
+        {
+            string res = null;
+            using (var tmp = new FormUrlEncodedContent(args.Select(x => new KeyValuePair<string, string>(x.Item1, x.Item2))))
+                res = tmp.ReadAsStringAsync().Result;
+            return res;
+        }
 
         public ApiClient(string baseAddress = "https://api.jarvis-edge.io")
         {
@@ -123,6 +153,15 @@ namespace Api
             };
             var response = await client.PostAsync("/users/requestPassword", new FormUrlEncodedContent(args));
             var result = await response.Content.ReadAsAsync<Response<RequestNewPasswordResult>>(mediaFormatters.Value);
+            return result;
+        }
+
+        // GET: https://api.jarvis-edge.io/users/{userId}/
+        public async Task<Response<User>> GetUser(int userId, string token)
+        {
+            var query = BuildQuery(("token", token));
+            var response = await client.GetAsync($"users/{userId}?{query}");
+            var result = await response.Content.ReadAsAsync<Response<User>>(mediaFormatters.Value);
             return result;
         }
     }

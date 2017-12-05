@@ -27,6 +27,9 @@ namespace ConsoleTest
 
             var res4 = client.RequestNewPassword(email).Result;
             Console.WriteLine(string.Join(", ", res4.Error.Select(x => x.Message)));
+
+            var res5 = client.GetUser(res2.Result.Id, res2.Result.Token).Result;
+            Console.WriteLine(res5.Result.LastName);
         }
     }
 }
