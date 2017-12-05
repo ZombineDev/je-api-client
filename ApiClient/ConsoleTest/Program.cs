@@ -18,8 +18,15 @@ namespace ConsoleTest
             var res2 = client.Login("test-account@jarvis-edge.io", "test").Result;
             Console.WriteLine(res2.Result.Token);
 
-            var res3 = client.Register("user1", "first", "last", "test@mail.com", "Sup3rSecurePasswd!").Result;
+            var guid = Guid.NewGuid().ToString();
+            var userName = $"user1_{guid}";
+            var email = $"test{guid}@mail.com";
+
+            var res3 = client.Register(userName, "first", "last", email, "Sup3rSecurePasswd!").Result;
             Console.WriteLine(res3.Result.Token);
+
+            var res4 = client.RequestNewPassword(email).Result;
+            Console.WriteLine(string.Join(", ", res4.Error.Select(x => x.Message)));
         }
     }
 }

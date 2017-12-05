@@ -32,6 +32,11 @@ namespace Api
         public string Token { get; set; }
     }
 
+    public class RequestNewPasswordResult
+    {
+        public string Email { get; set; }
+    }
+
     public class LoginResult
     {
         public int Id { get; set; }
@@ -106,6 +111,18 @@ namespace Api
             };
             var response = await client.PostAsync("/users/login", new FormUrlEncodedContent(args));
             var result = await response.Content.ReadAsAsync<Response<LoginResult>>(mediaFormatters.Value);
+            return result;
+        }
+
+        // POST https://api.jarvis-edge.io/users/requestPassword/
+        public async Task<Response<RequestNewPasswordResult>> RequestNewPassword(string email)
+        {
+            var args = new[]
+            {
+                new KeyValuePair<string, string>("email", email),
+            };
+            var response = await client.PostAsync("/users/requestPassword", new FormUrlEncodedContent(args));
+            var result = await response.Content.ReadAsAsync<Response<RequestNewPasswordResult>>(mediaFormatters.Value);
             return result;
         }
     }
