@@ -14,6 +14,9 @@ namespace ConsoleTest
             var client = new ApiClient();
             var res = client.GetBasicAsync().Result;
             Console.WriteLine(res.Result.Name);
+
+            var res2 = client.Login("test-account@jarvis-edge.io", "test").Result;
+            Console.WriteLine(res2.Result.Token);
         }
     }
 }
