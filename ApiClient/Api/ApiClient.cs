@@ -22,6 +22,11 @@ namespace Api
         public string Socket { get; set; }
     }
 
+    public class RegisterResult
+    {
+        public string Token { get; set; }
+    }
+
     public class LoginResult
     {
         public int Id { get; set; }
@@ -69,12 +74,31 @@ namespace Api
             return result;
         }
 
+        // POST https://api.jarvis-edge.io/users/register/
+        public async Task<Response<RegisterResult>> Register(
+            string pseudo, string firstName, string lastName, string email, string password)
+        {
+            var args = new[]
+            {
+                new KeyValuePair<string, string>("pseudo", pseudo),
+                new KeyValuePair<string, string>("firstName", firstName),
+                new KeyValuePair<string, string>("lastName", lastName),
+                new KeyValuePair<string, string>("email", email),
+                new KeyValuePair<string, string>("password", password),
+            };
+            var response = await client.PostAsync("/users/register", new FormUrlEncodedContent(args));
+            var result = await response.Content.ReadAsAsync<Response<RegisterResult>>(mediaFormatters.Value);
+            return result;
+        }
+
         // POST https://api.jarvis-edge.io/users/login/
         public async Task<Response<LoginResult>> Login(string email, string password)
         {
-            var args = new List<KeyValuePair<string, string>>();
-            args.Add(new KeyValuePair<string, string>("email", email));
-            args.Add(new KeyValuePair<string, string>("password", password));
+            var args = new[]
+            {
+                new KeyValuePair<string, string>("email", email),
+                new KeyValuePair<string, string>("password", password)
+            };
             var response = await client.PostAsync("/users/login", new FormUrlEncodedContent(args));
             var result = await response.Content.ReadAsAsync<Response<LoginResult>>(mediaFormatters.Value);
             return result;
