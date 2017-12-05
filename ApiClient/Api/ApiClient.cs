@@ -10,8 +10,13 @@ namespace Api
     public class Response<T>
     {
         public string Status { get; set; }
-        public string Error { get; set; }
+        public Error[] Error { get; set; }
         public T Result { get; set; }
+    }
+
+    public class Error
+    {
+        public string Message { get; set; }
     }
 
     public class Basic
