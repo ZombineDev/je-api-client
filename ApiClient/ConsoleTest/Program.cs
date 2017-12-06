@@ -43,6 +43,12 @@ namespace ConsoleTest
             }).Result;
 
             Console.WriteLine(res6.Result.City);
+
+            // TODO: Probably we need to activate the account, before we can delete it,
+            // otherwise we get "Your Token is not valid" error.
+            var testLogin = client.Login(email, pass).Result.Result;
+            var res7 = client.DeleteUser(testLogin.Id, testLogin.Token).Result;
+            //Console.WriteLine(res7.Result.Id);
         }
     }
 }

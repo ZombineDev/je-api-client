@@ -111,6 +111,11 @@ namespace Api
         public string Token { get; set; }
     }
 
+    public class DeleteUserResult
+    {
+        public int Id { get; set; }
+    }
+
     // Docs: https://api.docs.jarvis-edge.io/
     public class ApiClient
     {
@@ -220,6 +225,15 @@ namespace Api
             var content = ToFormUrlEncodedContent(user);
             var response = await client.PostAsync($"/users/{userId}?{query}", content);
             var result = await response.Content.ReadAsAsync<Response<User>>(mediaFormatters.Value);
+            return result;
+        }
+
+        // GET: https://api.jarvis-edge.io/users/{userId}/delete/
+        public async Task<Response<DeleteUserResult>> DeleteUser(int userId, string token)
+        {
+            var query = BuildQuery(("token", token));
+            var response = await client.GetAsync($"/users/{userId}/delete?{query}");
+            var result = await response.Content.ReadAsAsync<Response<DeleteUserResult>>(mediaFormatters.Value);
             return result;
         }
     }
