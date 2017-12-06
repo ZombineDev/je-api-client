@@ -89,6 +89,28 @@ namespace Api
         public string UpdatedAt { get; set; }
     }
 
+    public class ModifyUser
+    {
+        public string Pseudo { get; set; }
+        public string Avatar { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string CompanyName { get; set; }
+        public string Address { get; set; }
+        public string PostalCode { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string SteemUserName { get; set; }
+        public string SteemPostingKey { get; set; }
+    }
+
+    public class ModifyUserResult
+    {
+        public string Token { get; set; }
+    }
+
     // Docs: https://api.docs.jarvis-edge.io/
     public class ApiClient
     {
@@ -187,6 +209,16 @@ namespace Api
         {
             var query = BuildQuery(("token", token));
             var response = await client.GetAsync($"users/{userId}?{query}");
+            var result = await response.Content.ReadAsAsync<Response<User>>(mediaFormatters.Value);
+            return result;
+        }
+
+        // POST: https://api.jarvis-edge.io/users/{userId}/
+        public async Task<Response<User>> ModifyUser(int userId, string token, ModifyUser user)
+        {
+            var query = BuildQuery(("token", token));
+            var content = ToFormUrlEncodedContent(user);
+            var response = await client.PostAsync($"/users/{userId}?{query}", content);
             var result = await response.Content.ReadAsAsync<Response<User>>(mediaFormatters.Value);
             return result;
         }

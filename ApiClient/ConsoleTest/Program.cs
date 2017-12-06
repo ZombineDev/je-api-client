@@ -34,6 +34,15 @@ namespace ConsoleTest
 
             var res5 = client.GetUser(res2.Result.Id, res2.Result.Token).Result;
             Console.WriteLine(res5.Result.LastName);
+
+            var res6 = client.ModifyUser(res2.Result.Id, res2.Result.Token, new ModifyUser()
+            {
+                Email = jeTestEmail,
+                Pseudo = jeTestPass,
+                City = $"Sofia_{guid}"
+            }).Result;
+
+            Console.WriteLine(res6.Result.City);
         }
     }
 }
