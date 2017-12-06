@@ -38,6 +38,15 @@ namespace Api
         public string Socket { get; set; }
     }
 
+    public class RegisterUserRequest
+    {
+        public string Pseudo { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
     public class RegisterResult
     {
         public string Token { get; set; }
@@ -46,6 +55,12 @@ namespace Api
     public class RequestNewPasswordResult
     {
         public string Email { get; set; }
+    }
+
+    public class LoginRequest
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 
     public class LoginResult
@@ -168,31 +183,19 @@ namespace Api
         }
 
         // POST https://api.jarvis-edge.io/users/register/
-        public async Task<Response<RegisterResult>> Register(
-            string pseudo, string firstName, string lastName, string email, string password)
+        public async Task<Response<RegisterResult>> Register(RegisterUserRequest user)
         {
-            var args = new[]
-            {
-                new KeyValuePair<string, string>("pseudo", pseudo),
-                new KeyValuePair<string, string>("firstName", firstName),
-                new KeyValuePair<string, string>("lastName", lastName),
-                new KeyValuePair<string, string>("email", email),
-                new KeyValuePair<string, string>("password", password),
-            };
-            var response = await client.PostAsync("/users/register", new FormUrlEncodedContent(args));
+            var request = ToFormUrlEncodedContent(user);
+            var response = await client.PostAsync("/users/register", request);
             var result = await response.Content.ReadAsAsync<Response<RegisterResult>>(mediaFormatters.Value);
             return result;
         }
 
         // POST https://api.jarvis-edge.io/users/login/
-        public async Task<Response<LoginResult>> Login(string email, string password)
+        public async Task<Response<LoginResult>> Login(LoginRequest login)
         {
-            var args = new[]
-            {
-                new KeyValuePair<string, string>("email", email),
-                new KeyValuePair<string, string>("password", password)
-            };
-            var response = await client.PostAsync("/users/login", new FormUrlEncodedContent(args));
+            var request = ToFormUrlEncodedContent(login);
+            var response = await client.PostAsync("/users/login", request);
             var result = await response.Content.ReadAsAsync<Response<LoginResult>>(mediaFormatters.Value);
             return result;
         }
