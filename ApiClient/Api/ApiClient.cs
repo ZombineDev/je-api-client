@@ -11,8 +11,18 @@ namespace Api
     public class Response<T>
     {
         public string Status { get; set; }
-        public Error[] Error { get; set; }
+        public Object Error { get; set; }
         public T Result { get; set; }
+
+        public string ErrorAsString => Error as string;
+        public Error[] ErrorAsArray => Error as Error[];
+
+        [System.Runtime.Serialization.OnDeserialized]
+        internal void OnDeserialized(System.Runtime.Serialization.StreamingContext context)
+        {
+            if (Error is Newtonsoft.Json.Linq.JArray json)
+                Error = json.ToObject<Error[]>();
+        }
     }
 
     public class Error
