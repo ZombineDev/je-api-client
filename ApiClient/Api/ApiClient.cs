@@ -100,8 +100,6 @@ namespace Api
                 return new[] { r };
             }, System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
-        private readonly HttpClient client;
-
         public static string BuildQuery(params (string, string)[] args)
         {
             string res = null;
@@ -109,6 +107,24 @@ namespace Api
                 res = tmp.ReadAsStringAsync().Result;
             return res;
         }
+
+        public static FormUrlEncodedContent ToFormUrlEncodedContent<T>(T obj)
+        {
+            string ToCamelCase(string inPascalCase)
+            {
+                var sb = new System.Text.StringBuilder(inPascalCase);
+                sb[0] = Char.ToLower(sb[0]);
+                return sb.ToString();
+            }
+
+            var pairs = obj.GetType().GetProperties()
+                .Select(p => new KeyValuePair<string, string>(ToCamelCase(p.Name), p.GetValue(obj)?.ToString()))
+                .Where(kv => kv.Value != null);
+
+            return new FormUrlEncodedContent(pairs);
+        }
+
+        private readonly HttpClient client;
 
         public ApiClient(string baseAddress = "https://api.jarvis-edge.io")
         {
