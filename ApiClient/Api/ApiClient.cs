@@ -236,5 +236,14 @@ namespace Api
             var result = await response.Content.ReadAsAsync<Response<DeleteUserResult>>(mediaFormatters.Value);
             return result;
         }
+
+        // GET: https://api.jarvis-edge.io/users/search
+        public async Task<Response<User[]>> SearchUsers(string token, string searchQuery)
+        {
+            var query = BuildQuery(("token", token), ("search", searchQuery));
+            var response = await client.GetAsync($"users/search?{query}");
+            var result = await response.Content.ReadAsAsync<Response<User[]>>(mediaFormatters.Value);
+            return result;
+        }
     }
 }

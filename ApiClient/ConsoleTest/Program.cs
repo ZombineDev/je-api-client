@@ -49,6 +49,10 @@ namespace ConsoleTest
             var testLogin = client.Login(email, pass).Result.Result;
             var res7 = client.DeleteUser(testLogin.Id, testLogin.Token).Result;
             //Console.WriteLine(res7.Result.Id);
+
+            var res8 = client.SearchUsers(res2.Result.Token, "%").Result;
+            foreach (var u in res8.Result)
+                Console.WriteLine($"#{u.Id} {u.FirstName} {u.LastName} [{u.Pseudo}] FriendState: {u.FriendState} LinkState: {u.LinkState}");
         }
     }
 }
