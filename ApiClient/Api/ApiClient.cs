@@ -78,41 +78,19 @@ namespace Api
         public string Password { get; set; }
     }
 
-    public class LoginResult
+    public class LoginResult : ModifyUser
     {
         public int Id { get; set; }
-        public string Pseudo { get; set; }
         public string Avatar { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string CompanyName { get; set; }
-        public string Address { get; set; }
-        public string PostalCode { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string SteemUserName { get; set; }
-        public string SteemPostingKey { get; set; }
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
         public string Token { get; set; }
     }
 
-    public class User
+    public class User : ModifyUser
     {
         public int Id { get; set; }
-        public string Pseudo { get; set; }
         public string Avatar { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string CompanyName { get; set; }
-        public string Address { get; set; }
-        public string PostalCode { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string SteemUserName { get; set; }
-        public string SteemPostingKey { get; set; }
         public int LinkState { get; set; }
         public int FriendState { get; set; }
         public string CreatedAt { get; set; }
