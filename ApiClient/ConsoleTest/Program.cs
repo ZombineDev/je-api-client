@@ -38,7 +38,7 @@ namespace ConsoleTest
             Console.WriteLine(res3.Result.Token);
 
             var res4 = client.RequestNewPassword(newUser.Email).Result;
-            Console.WriteLine(string.Join(", ", res4.ErrorAsArray.Select(x => x.Message)));
+            Console.WriteLine(res4.ErrorMsg);
 
             var res5 = client.GetUser(res2.Result.Id, res2.Result.Token).Result;
             Console.WriteLine(res5.Result.LastName);

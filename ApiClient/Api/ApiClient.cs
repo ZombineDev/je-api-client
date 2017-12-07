@@ -17,6 +17,21 @@ namespace Api
         public string ErrorAsString => Error as string;
         public Error[] ErrorAsArray => Error as Error[];
 
+        public string ErrorMsg
+        {
+            get
+            {
+                if (ErrorAsArray != null && ErrorAsArray.Length > 0)
+                {
+                    var errors = ErrorAsArray.Length == 1 ? "error" : "errors";
+                    var errorMsgs = String.Join(",\n", ErrorAsArray.Select((x, i) => $"#{i + 1} \"{x.Message}\""));
+                    return $"{ErrorAsArray.Length} {errors} detected:\n{errorMsgs}.";
+                }
+                else
+                    return ErrorAsString;
+            }
+        }
+
         [System.Runtime.Serialization.OnDeserialized]
         internal void OnDeserialized(System.Runtime.Serialization.StreamingContext context)
         {
