@@ -1,0 +1,50 @@
+<Window x:Class="UIClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UIClient"
+        xmlns:views="clr-namespace:UIClient.Views"
+        xmlns:vms="clr-namespace:UIClient.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Width="800" Height="600" >
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:StartVM}">
+                <views:StartView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:LoginVM}">
+                <views:LoginView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:RegisterUserVM}">
+                <views:RegisterUserView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:ResetPasswordVM}">
+                <views:ResetPasswordView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:UserHomeVM}">
+                <views:UserHomeView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:SearchUsersVM}">
+                <views:SearchUsersView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:EditProfileVM}">
+                <views:EditProfileView DataContext="{Binding}" />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:ViewProfileVM}">
+                <views:ViewProfileView DataContext="{Binding}" />
+            </DataTemplate>
+
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentView.Value}" />
+    </Grid>
+</Window>

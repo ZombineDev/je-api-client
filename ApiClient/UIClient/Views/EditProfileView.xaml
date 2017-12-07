@@ -1,0 +1,34 @@
+<UserControl x:Class="UIClient.Views.EditProfileView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UIClient.Views"
+        xmlns:controls="clr-namespace:UIClient.Controls"
+        mc:Ignorable="d">
+    <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+        <TextBlock Text="Edit Profile" HorizontalAlignment="Center" FontSize="30"/>
+
+        <StackPanel Orientation="Vertical">
+            <controls:TextField Label="Username: " DataContext="{Binding Pseudo}" />
+            <controls:TextField Label="First Name: " DataContext="{Binding FirstName}" />
+            <controls:TextField Label="Last Name: " DataContext="{Binding LastName}" />
+            <controls:TextField Label="Email: " DataContext="{Binding Email}" />
+            <controls:PasswordField Label="Password: " DataContext="{Binding Password}" />
+            <controls:TextField Label="Company Name: " DataContext="{Binding CompanyName}" />
+            <controls:TextField Label="Address: " DataContext="{Binding Address}" />
+            <controls:TextField Label="Postal Code: " DataContext="{Binding PostalCode}" />
+            <controls:TextField Label="City: " DataContext="{Binding City}" />
+            <controls:TextField Label="Country: " DataContext="{Binding Country}" />
+            <controls:TextField Label="Steem User Name: " DataContext="{Binding SteemUserName}" />
+            <controls:TextField Label="Steem Posting Key: " DataContext="{Binding SteemPostingKey}" />
+        </StackPanel>
+
+        <DockPanel HorizontalAlignment="Stretch" >
+            <Button Content="Cancel" Margin="5" Padding="5" DockPanel.Dock="Left"
+                    Command="{Binding GoBackCmd}"/>
+            <Button Content="SaveChanges" Margin="0 5 5 5" Padding="5" DockPanel.Dock="Left"
+                    Command="{Binding SaveChangesCmd}"/>
+        </DockPanel>
+    </StackPanel>
+</UserControl>
