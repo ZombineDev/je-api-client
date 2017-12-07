@@ -62,7 +62,7 @@ namespace ConsoleTest
             var res8 = client.SearchUsers(res2.Result.Token, "%").Result;
             foreach (var u in res8.Result)
                 Console.WriteLine($"#{u.Id} {u.FirstName} {u.LastName} [{u.Pseudo}] " +
-                    "FriendState: {u.FriendState} LinkState: {u.LinkState}");
+                    $"FriendState: {u.FriendState} LinkState: {u.LinkState}");
         }
     }
 }
