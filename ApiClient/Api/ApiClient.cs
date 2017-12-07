@@ -183,6 +183,23 @@ namespace Api
             return result;
         }
 
+        // GET https://www.jarvis-edge.io/activation/{token}/
+        public async Task<bool> ActivateAccount(string token)
+        {
+            token = System.Net.WebUtility.UrlEncode(token);
+
+            bool ok = false;
+
+            using (var tmpClient = new HttpClient())
+            {
+                tmpClient.BaseAddress = new Uri("https://www.jarvis-edge.io");
+                var response = await client.GetAsync($"/activation/{token}");
+                ok = response.IsSuccessStatusCode;
+            }
+
+            return ok;
+        }
+
         // POST https://api.jarvis-edge.io/users/login/
         public async Task<Response<LoginResult>> Login(LoginRequest login)
         {

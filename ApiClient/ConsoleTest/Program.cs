@@ -37,6 +37,10 @@ namespace ConsoleTest
             var res3 = client.Register(newUser).Result;
             Console.WriteLine(res3.Result.Token);
 
+            // Doesn't work - the token received by registration is different
+            // from the one used for account activation.
+            Console.WriteLine(client.ActivateAccount(res3.Result.Token).Result);
+
             var res4 = client.RequestNewPassword(newUser.Email).Result;
             Console.WriteLine(res4.ErrorMsg);
 
